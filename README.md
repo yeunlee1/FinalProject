@@ -4,6 +4,9 @@
 이프로젝트는 리액트(프론트)와 스프링부트(백)을 사용하여 제작한 화장품쇼핑몰 프로젝트입니다.
 사진은 써니콘의 화장품회사 사장님의 허락을 받아 사용하였습니다.
 
+역할 : PM, Product 페이지 CRUD 스프링부트 리액트 개발
+Order 스프링부트, 리액트 개발
+
 리액트에서 사용한 라이브러리 : 
 
 Recoil, useQuery, tailwind, React-spinner-Overlay, React-icon, tossPayment
