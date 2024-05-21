@@ -66,8 +66,8 @@ const OrderComponent = () => {
 
 
     const deliveryFee = totalPrice === 0 || totalPrice >= 30000 ? 0 : 3000; // 배송비 설정
-    const widgetClientKey = "test_gck_docs_Ovk5rk1EwkEbP0W43n07xlzm"; //★토스페이먼츠 시험키
-    // const widgetClientKey = "test_ck_DpexMgkW36wNW9BqPpndVGbR5ozO";// ★토스페이먼츠 내키
+    const widgetClientKey = "test_gck_docs_Ovk5rk1EwkEbP0W43n07xlzmss12"; //★토스페이먼츠 시험키
+
     const customerKey = loginState.email; //★토스페이먼츠
     const [paymentWidget, setPaymentWidget] = useState(null);//★토스
     const paymentMethodsWidgetRef = useRef(null);//★토스
