@@ -12,7 +12,7 @@ Order 스프링부트, 리액트 개발
 
 리액트에서 사용한 라이브러리 : 
 
-Recoil, useQuery, tailwind, React-spinner-Overlay, React-icon, tossPayment
+Recoil, React-Query, tailwind, React-spinner-Overlay, React-icon, tossPayment
 
 스프링부트 사용한 라이브러리 : 
 
