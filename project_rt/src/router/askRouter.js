@@ -4,8 +4,6 @@ import { Navigate } from "react-router-dom";
 const askRouter = () => {
 
     const Loading = <div>Loading....</div>
-    /* lazy 를 통해 각각 분리된 라우트를 필요할 때만 불러온다.
-    초기 로딩시간 최적화, 페이지 성능 향상 */
     const AskList = lazy(()=>import("../pages/ask/ListPage"))
     const AskAdd = lazy(()=>import("../pages/ask/AddPage"))
     const AskRead = lazy(()=>import("../pages/ask/ReadPage"))

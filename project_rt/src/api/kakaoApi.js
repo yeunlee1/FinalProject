@@ -2,7 +2,7 @@ import axios from "axios"
 import { API_SERVER_HOST } from "./todoApi"
 
 
-const rest_api_key = `` // REST API 키 Git Upload를 해야해서 삭제
+const rest_api_key = ` ` // REST API 키 Git Upload를 해야해서 삭제
 const redirect_uri = `http://localhost:3000/member/kakao`
 
 const auth_code_path = `https://kauth.kakao.com/oauth/authorize`
