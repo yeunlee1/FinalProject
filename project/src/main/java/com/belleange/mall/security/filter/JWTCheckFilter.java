@@ -11,7 +11,6 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.OncePerRequestFilter;
 
-
 import com.google.gson.Gson;
 
 import jakarta.servlet.FilterChain;
@@ -25,8 +24,7 @@ public class JWTCheckFilter extends OncePerRequestFilter {
 
     @Override
     protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
-
-        // Preflight요청은 체크하지 않음
+        // Preflight 요청은 체크하지 않음
         if (request.getMethod().equals("OPTIONS")) {
             return true;
         }
@@ -35,170 +33,34 @@ public class JWTCheckFilter extends OncePerRequestFilter {
 
         log.info("check uri.............." + path);
 
+        // 특정 경로를 검사하지 않도록 설정
+        if (path.startsWith("/api/member") || 
+        path.startsWith("/api/ask/list") || 
+        path.startsWith("/api/event/view") || 
+        path.startsWith("/api/event/list") || 
+        path.startsWith("/api/products/list/set") || 
+        path.startsWith("/api/products/list/all") || 
+        path.startsWith("/api/products/list/one") || 
+        path.startsWith("/api/products/view") || 
+        path.startsWith("/api/notice/list") || 
+        path.startsWith("/api/notice/view") || 
+        path.startsWith("/api/search/products") ||
+        path.equals("/api/v1/mails/send-certification")) { // 이메일 인증 경로는 토큰 검사 안 함
+        return true;
+    }
 
-        // member관련 토큰 검사 안할거다///////////////////////////////////////
-
-        if (path.startsWith("/api/member")) {
-            return true;
+        // 특정 GET 요청을 검사하지 않도록 설정
+        if (request.getMethod().equals("GET")) {
+            if (path.matches("/api/ask/\\d+/?") || 
+                path.matches("/api/event/\\d+/?") || 
+                path.matches("/api/products/\\d+/?") || 
+                path.matches("/api/notice/\\d+/?")) {
+                return true;
+            }
         }
-
-        if (path.startsWith("/api/member/")) {
-            return true;
-        }
-
-        // member관련 토큰 검사 안할거다.end///////////////////////////////////////
-
-
-        // Ask관련 토큰 검사 안할거다///////////////////////////////////////
-
-
-        if (path.startsWith("/api/ask/list/")) {
-            return true;
-        }
-
-        if (path.startsWith("/api/ask/list")) {
-            return true;
-        }
-
-        if (path.matches("/api/ask/\\d+/?") && request.getMethod().equals("GET")) {
-            return true;
-        }
-
-        if (path.matches("/api/ask/\\d+/?/") && request.getMethod().equals("GET")) {
-            return true;
-        }
-
-
-        // Ask관련 토큰 검사 안할거다.end///////////////////////////////////////
-
-
-        // Event관련 토큰 검사 안할거다///////////////////////////////////////
-
-
-        if (path.startsWith("/api/event/view/") && request.getMethod().equals("GET")) {
-            return true;
-        }
-
-
-        if (path.startsWith("/api/event/view") && request.getMethod().equals("GET")) {
-            return true;
-        }
-
-        if (path.startsWith("/api/event/list/")) {
-            return true;
-        }
-
-        if (path.startsWith("/api/event/list")) {
-            return true;
-        }
-
-        if (path.matches("/api/event/\\d+/?") && request.getMethod().equals("GET")) {  // 정규식으로 숫자 매칭
-            return true;
-        }
-
-        if (path.matches("/api/event/\\d+/?/") && request.getMethod().equals("GET")) {  // 정규식으로 숫자 매칭
-            return true;
-        }
-
-        // Event관련 토큰 검사 안할거다.end///////////////////////////////////////
-
-
-        // Product관련 토큰 검사 안할거다///////////////////////////////////////
-
-
-        if (path.startsWith("/api/products/list/set")) {
-            return true;
-        }
-
-        if (path.startsWith("/api/products/list/set/")) {
-            return true;
-        }        if (path.startsWith("/api/products/list/all")) {
-            return true;
-        }
-
-        if (path.startsWith("/api/products/list/all/")) {
-            return true;
-        }
-
-
-        if (path.startsWith("/api/products/list/one")) {
-            return true;
-        }
-
-        if (path.startsWith("/api/products/list/one/")) {
-            return true;
-        }
-
-        if (path.startsWith("/api/products/view/")) {
-            return true;
-        }
-
-        if (path.startsWith("/api/products/view")) {
-            return true;
-        }
-
-        if (path.matches("/api/products/\\d+/?/") && request.getMethod().equals("GET")) {
-            return true;
-        }
-
-        if (path.matches("/api/products/\\d+/?") && request.getMethod().equals("GET")) {
-            return true;
-        }
-
-
-        // Product관련 토큰 검사 안할거다.end///////////////////////////////////////
-
-
-        // Notice관련 토큰 검사 안할거다///////////////////////////////////////
-
-
-        if (path.matches("/api/notice/\\d+/?/") && request.getMethod().equals("GET")) {
-            return true;
-        }
-
-        if (path.matches("/api/notice/\\d+/?") && request.getMethod().equals("GET")) {
-            return true;
-        }
-
-
-        if (path.startsWith("/api/notice/list/")) {
-            return true;
-        }
-
-        if (path.startsWith("/api/notice/list")) {
-            return true;
-        }
-
-
-        if (path.startsWith("/api/notice/view/")) {
-            return true;
-        }
-
-        if (path.startsWith("/api/notice/view")) {
-            return true;
-        }
-
-
-
-        // Notice관련 토큰 검사 안할거다.end///////////////////////////////////////
-
-
-        // 검색관련 토큰 검사 안할거다///////////////////////////////////////
-
-        if (path.startsWith("/api/search/products/")) {
-            return true;
-        }
-
-        if (path.startsWith("/api/search/products")) {
-            return true;
-        }
-
-        // 검색관련 토큰 검사 안할거다.end///////////////////////////////////////
-
 
         return false;
     }
-
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
@@ -208,13 +70,11 @@ public class JWTCheckFilter extends OncePerRequestFilter {
         String authHeaderStr = request.getHeader("Authorization");
 
         try {
-            //Bearer accestoken...
+            // Bearer accestoken...
             String accessToken = authHeaderStr.substring(7);
             Map<String, Object> claims = JWTUtil.validateToken(accessToken);
 
             log.info("JWT claims: " + claims);
-
-            //filterChain.doFilter(request, response); //이하 추가
 
             String email = (String) claims.get("email");
             String pw = (String) claims.get("pw");
@@ -226,7 +86,7 @@ public class JWTCheckFilter extends OncePerRequestFilter {
             Boolean social = (Boolean) claims.get("social");
             List<String> roleNames = (List<String>) claims.get("roleNames");
 
-            MemberDTO memberDTO = new MemberDTO(email, pw, nickname, phone, birth, useraddress, detailaddress, social.booleanValue(), roleNames);
+            MemberDTO memberDTO = new MemberDTO(email, pw, nickname, phone, birth, useraddress, detailaddress, social, roleNames);
 
             log.info("-----------------------------------");
             log.info(memberDTO);
@@ -240,7 +100,6 @@ public class JWTCheckFilter extends OncePerRequestFilter {
             filterChain.doFilter(request, response);
 
         } catch (Exception e) {
-
             log.error("JWT Check Error..............");
             log.error(e.getMessage());
 
@@ -251,9 +110,6 @@ public class JWTCheckFilter extends OncePerRequestFilter {
             PrintWriter printWriter = response.getWriter();
             printWriter.println(msg);
             printWriter.close();
-
         }
     }
-
-
 }

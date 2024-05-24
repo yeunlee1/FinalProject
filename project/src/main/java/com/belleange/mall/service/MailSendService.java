@@ -28,8 +28,8 @@ public class MailSendService {
         String certificationNumber = generator.createCertificationNumber();
         // 이메일 본문 내용을 생성합니다.
         String content = String.format("%s/api/v1/users/verify?certificationNumber=%s&email=%s   링크를 3분 이내에 클릭해주세요.", DOMAIN_NAME, certificationNumber, email);
-        // 인증 번호를 Redis에 저장합니다.
-        certificationNumberRepository.saveCertificationNumber(email, certificationNumber);
+        // 인증 번호를 메모리 저장소에 저장합니다.
+        certificationNumberRepository.saveCertificationNumber(email, certificationNumber, 180); // 180초 (3분)
         // 이메일을 전송합니다.
         sendMail(email, content);
         // 인증 응답을 반환합니다.

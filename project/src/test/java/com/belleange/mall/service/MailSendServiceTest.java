@@ -1,6 +1,6 @@
 package com.belleange.mall.service;
 
-import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.*;
 
 import com.belleange.mall.component.CertificationGenerator;
@@ -38,7 +38,7 @@ public class MailSendServiceTest {
         String email = "user1@aaa.com";
         String certificationNumber = "123456";
         when(generator.createCertificationNumber()).thenReturn(certificationNumber);
-        doNothing().when(certificationNumberRepository).saveCertificationNumber(anyString(), anyString());
+        doNothing().when(certificationNumberRepository).saveCertificationNumber(anyString(), anyString(), anyLong());
 
         MimeMessage mimeMessage = mock(MimeMessage.class);
         when(mailSender.createMimeMessage()).thenReturn(mimeMessage);
@@ -48,7 +48,7 @@ public class MailSendServiceTest {
 
         // Assert
         verify(generator, times(1)).createCertificationNumber();
-        verify(certificationNumberRepository, times(1)).saveCertificationNumber(email, certificationNumber);
+        verify(certificationNumberRepository, times(1)).saveCertificationNumber(email, certificationNumber, 180);
 
         ArgumentCaptor<MimeMessage> mimeMessageCaptor = ArgumentCaptor.forClass(MimeMessage.class);
         verify(mailSender, times(1)).send(mimeMessageCaptor.capture());
