@@ -47,6 +47,11 @@ dependencies {
         // Hibernate Validator (구현체)
     implementation 'org.hibernate.validator:hibernate-validator:7.0.1.Final'
 
+    //email인증
+    implementation 'org.springframework.boot:spring-boot-starter-mail'
+    implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+    
+
 }
 
 tasks.named('test') {

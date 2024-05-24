@@ -2,14 +2,13 @@ package com.belleange.mall.util;
 
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
-import lombok.extern.log4j.Log4j2;
 
 import javax.crypto.SecretKey;
 import java.time.ZonedDateTime;
 import java.util.Date;
 import java.util.Map;
 
-@Log4j2
+
 public class JWTUtil {
 
   // JWT 서명에 사용되는 키
